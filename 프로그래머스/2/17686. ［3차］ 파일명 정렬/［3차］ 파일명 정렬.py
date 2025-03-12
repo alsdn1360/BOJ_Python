@@ -12,7 +12,7 @@ def solution(files):
         head, number, tail = re.match('([^0-9]+)([0-9]{1,5})(.*)', file).groups()
         
         # 대소문자 상관없으므로 소문자로 처리
-        folder.append((file, head.lower(), int(number)))
+        folder.append((file, head.lower(), int(number), tail))
         
     # head 사전 기준으로 정렬하고 같으면, number 오름차순으로 정렬
     sorted_folder = sorted(folder, key = lambda x : (x[1], x[2]))
