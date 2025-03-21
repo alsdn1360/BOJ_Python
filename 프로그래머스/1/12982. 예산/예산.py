@@ -5,14 +5,13 @@ def solution(d, budget):
     n = len(d)
     
     for i in range(n):
+        temp_budget = budget
         cnt = 0
             
         # 첫 번째 값이 budget보다 작거나 같아야 빼고 cnt +1
         if budget >= d[i]:
-            temp_budget = budget - d[i]
+            temp_budget -= d[i]
             cnt += 1
-        else:
-            temp_budget = budget
         
         # 그 다음 값부터 계속 빼면서 0보다 크면 cnt +1
         for j in range(i + 1, n):
