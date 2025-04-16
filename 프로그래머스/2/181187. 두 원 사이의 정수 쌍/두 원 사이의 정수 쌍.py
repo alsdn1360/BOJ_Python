@@ -16,12 +16,8 @@ def solution(r1, r2):
             answer += 2 * (max_y - min_y + 1)
         else:
             if min_y == 0:
-                # (x, 0), (-x, 0)
-                answer += 2
-                
-                if max_y >= 1:
-                    # 0 빼고 max_y까지 갯수
-                    answer += 4 * max_y
+                # (x, 0) (-x, 0) 두 가지 경우의 수 추가
+                answer += 4 * max_y + 2
             else:
                 # y가 전부 양수일 때
                 answer += 4 * (max_y - min_y + 1)
