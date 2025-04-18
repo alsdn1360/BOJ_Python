@@ -26,15 +26,13 @@ def bfs(n, area, visited, i, j, rain_h):
 n = int(input())
 area = [list(map(int, input().split())) for _ in range(n)]
 
-max_rain_h = 0
+heights = {h for row in area for h in row}
+rain_hs = [0] + sorted(heights)
 safe_area = 0
 
-# 높이가 가장 높은 비의 높이 구하기
-for i in range(n):
-    max_rain_h = max(max_rain_h, max(area[i]))
 
 # 비가 전혀 내리지 않았을 때도 고려해서 0부터 시작
-for curr_rain_h in range(0, max_rain_h + 1):
+for curr_rain_h in rain_hs:
     # 현재 비의 높이 마다 새롭게 초기화해야 함
     curr_visited = [[False for _ in range(n)] for _ in range(n)]
     curr_safe_area = 0
