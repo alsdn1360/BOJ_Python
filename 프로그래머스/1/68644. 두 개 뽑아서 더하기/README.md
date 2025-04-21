@@ -1,10 +1,10 @@
 # [level 1] 두 개 뽑아서 더하기 - 68644 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/68644) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/68644?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 10.3 MB, 시간: 0.96 ms
+메모리: 66.3 MB, 시간: 17.98 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 22일 22:48:30
+2025년 04월 21일 20:05:33
 
 ### 문제 설명
 
