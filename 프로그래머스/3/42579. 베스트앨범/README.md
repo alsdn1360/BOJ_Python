@@ -1,10 +1,10 @@
 # [level 3] 베스트앨범 - 42579 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42579) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42579?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 0.08 ms
+메모리: 66.1 MB, 시간: 28.13 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 22일 22:52:04
+2025년 04월 22일 17:01:37
 
 ### 문제 설명
 
