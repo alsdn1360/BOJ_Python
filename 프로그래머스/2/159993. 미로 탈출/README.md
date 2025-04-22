@@ -1,10 +1,10 @@
 # [level 2] 미로 탈출 - 159993 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/159993) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/159993?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 18.98 ms
+메모리: 65.9 MB, 시간: 13.12 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 22일 22:46:50
+2025년 04월 22일 14:57:06
 
 ### 문제 설명
 
