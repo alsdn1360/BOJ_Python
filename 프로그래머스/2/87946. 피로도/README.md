@@ -1,10 +1,10 @@
 # [level 2] 피로도 - 87946 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/87946) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/87946?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 55.76 ms
+메모리: 63.8 MB, 시간: 6.29 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 03월 05일 20:47:29
+2025년 04월 25일 11:01:49
 
 ### 문제 설명
 
