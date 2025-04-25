@@ -1,10 +1,10 @@
 # [level 2] 전력망을 둘로 나누기 - 86971 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/86971) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/86971?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 10 MB, 시간: 10.30 ms
+메모리: 77.2 MB, 시간: 59.64 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 28일 11:11:56
+2025년 04월 25일 11:28:38
 
 ### 문제 설명
 
