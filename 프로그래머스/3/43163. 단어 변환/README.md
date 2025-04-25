@@ -1,10 +1,10 @@
 # [level 3] 단어 변환 - 43163 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43163) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43163?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 9.31 MB, 시간: 0.65 ms
+메모리: 66.5 MB, 시간: 31.87 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 03월 31일 11:15:17
+2025년 04월 25일 22:18:36
 
 ### 문제 설명
 
