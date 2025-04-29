@@ -9,7 +9,7 @@ def in_bound(nx, ny):
 
 def bfs(i, j):
     queue = deque([(i, j)])
-    visited[i][j] = True
+    paper[i][j] = 1
 
     area = 1
 
@@ -19,9 +19,9 @@ def bfs(i, j):
         for dx, dy in MOVES:
             nx, ny = x + dx, y + dy
 
-            if in_bound(nx, ny) and paper[nx][ny] == 0 and not visited[nx][ny]:
+            if in_bound(nx, ny) and paper[nx][ny] == 0:
                 queue.append((nx, ny))
-                visited[nx][ny] = True
+                paper[nx][ny] = 1
                 area += 1
 
     return area
@@ -31,7 +31,6 @@ def bfs(i, j):
 m, n, k = map(int, input().split())
 
 paper = [[0 for _ in range(n)] for _ in range(m)]
-visited = [[False for _ in range(n)] for _ in range(m)]
 
 for _ in range(k):
     x1, y1, x2, y2 = map(int, input().split())
@@ -45,7 +44,7 @@ answer = []
 
 for i in range(m):
     for j in range(n):
-        if paper[i][j] == 0 and not visited[i][j]:
+        if paper[i][j] == 0:
             area_cnt += 1
             answer.append(bfs(i, j))
 
