@@ -1,9 +1,6 @@
 from collections import deque
 
 
-OPERATION = {0: "D", 1: "S", 2: "L", 3: "R"}
-
-
 def d(n):
     return (2 * n) % 10000
 
@@ -21,38 +18,43 @@ def r(n):
 
 
 def bfs(a, b):
-    queue = deque([a])
-
+    queue = deque([(a, "")])
     visited = [False] * 10000
     visited[a] = True
 
-    pre_digits = [-1] * 10000
-    commands = [""] * 10000
-
     while queue:
-        curr_digit = queue.popleft()
+        curr_digit, command = queue.popleft()
 
         if curr_digit == b:
-            break
+            return command
 
-        for command, op in enumerate([d, s, l, r]):
-            next_digit = op(curr_digit)
+        # D
+        next_digit = d(curr_digit)
 
-            if not visited[next_digit]:
-                queue.append(next_digit)
-                visited[next_digit] = True
-                
-                pre_digits[next_digit] = curr_digit
-                commands[next_digit] = OPERATION[command]
+        if not visited[next_digit]:
+            queue.append((next_digit, command + "D"))
+            visited[next_digit] = True
 
-    answer = []
-    curr_digit = b
+        # S
+        next_digit = s(curr_digit)
 
-    while curr_digit != a:
-        answer.append(commands[curr_digit])
-        curr_digit = pre_digits[curr_digit]
+        if not visited[next_digit]:
+            queue.append((next_digit, command + "S"))
+            visited[next_digit] = True
 
-    return "".join(reversed(answer))
+        # L
+        next_digit = l(curr_digit)
+
+        if not visited[next_digit]:
+            queue.append((next_digit, command + "L"))
+            visited[next_digit] = True
+
+        # R
+        next_digit = r(curr_digit)
+
+        if not visited[next_digit]:
+            queue.append((next_digit, command + "R"))
+            visited[next_digit] = True
 
 
 # main
