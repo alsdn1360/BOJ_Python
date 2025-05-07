@@ -1,10 +1,10 @@
 # [level 2] 거리두기 확인하기 - 81302 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/81302) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/81302?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 9.29 MB, 시간: 0.21 ms
+메모리: 67 MB, 시간: 20.84 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 05월 07일 14:26:19
+2025년 05월 07일 15:47:14
 
 ### 문제 설명
 
