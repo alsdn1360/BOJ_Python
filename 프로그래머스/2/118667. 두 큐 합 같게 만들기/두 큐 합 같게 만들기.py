@@ -16,7 +16,7 @@ def solution(queue1, queue2):
         return -1
     
     while sum_q1 != (total // 2):
-        if answer > (3 * n):
+        if answer > (2 * n + 1):
             return -1
         
         if sum_q1 > sum_q2:
