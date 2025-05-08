@@ -16,8 +16,8 @@ class Solution {
         
         // 큰 큐에서 하나 빼서 작은 큐로 넣기 반복
         while (sumDeque1 != (total / 2)) {
-            // 작업 횟수가 큐 크기의 3배가 되면 더 이상 만들 수 없음
-            if (answer > queue1.size * 3) return -1
+            // 작업 횟수가 큐 크기의 (2배 + 1)이 되면 더 이상 만들 수 없음
+            if (answer > queue1.size * 2 + 1) return -1
             
             if (sumDeque1 > sumDeque2) {
                 val currNum = deque1.removeFirst().toLong()
