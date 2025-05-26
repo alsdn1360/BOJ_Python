@@ -4,16 +4,13 @@ answer = 0
 n, k = map(int, input().split())
 table = list(input())
 
-p_idx = []
+for i in range(n):
+    if table[i] != "P":
+        continue
 
-for i, t in enumerate(table):
-    if t == "P":
-        p_idx.append(i)
-
-for p_i in p_idx:
-    for h_i in range(p_i - k, p_i + k + 1):
-        if 0 <= h_i < n and table[h_i] == "H":
-            table[h_i] = "X"
+    for j in range(max(0, i - k), min(n, i + k + 1)):
+        if table[j] == "H":
+            table[j] = "X"
             answer += 1
 
             break
