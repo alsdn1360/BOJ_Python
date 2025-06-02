@@ -2,18 +2,17 @@
 n = int(input())
 taller_mem = list(map(int, input().split()))
 
-line = [float("inf")] * n
+line = [0] * n
 
 for i in range(n):
-    curr_person = i + 1
-    ramain_taller = taller_mem[i]
+    taller_cnt = 0
 
     for j in range(n):
-        if line[j] > curr_person:
-            if ramain_taller > 0:
-                ramain_taller -= 1
-            else:
-                line[j] = curr_person
+        if line[j] == 0:
+            if taller_cnt == taller_mem[i]:
+                line[j] = i + 1
                 break
+
+            taller_cnt += 1
 
 print(*line)
