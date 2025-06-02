@@ -4,18 +4,16 @@ taller_mem = list(map(int, input().split()))
 
 line = [float("inf")] * n
 
-for i, taller in enumerate(taller_mem):
+for i in range(n):
     curr_person = i + 1
-    ramain_taller = taller
+    ramain_taller = taller_mem[i]
 
-    for j, pos in enumerate(line):
-        if pos > curr_person:
+    for j in range(n):
+        if line[j] > curr_person:
             if ramain_taller > 0:
                 ramain_taller -= 1
             else:
                 line[j] = curr_person
                 break
-        else:
-            continue
 
 print(*line)
