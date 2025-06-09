@@ -1,42 +1,32 @@
+def find_shortcut(cmds, short_cut):
+    # 1. 첫 글자 단축키 확인
+    for w in range(len(cmds)):
+        if cmds[w][0].upper() not in short_cut:
+            short_cut.add(cmds[w][0].upper())
+            return w, 0
+
+    # 2. 첫 글자 제외 단축키 확인
+    for w in range(len(cmds)):
+        for c in range(1, len(cmds[w])):
+            if cmds[w][c].upper() not in short_cut:
+                short_cut.add(cmds[w][c].upper())
+                return w, c
+
+    return None  # 단축키를 지정할 수 없으면 None 반환
+
+
 # main
 n = int(input())
 short_cut = set()
 
 for _ in range(n):
-    cmds = list(map(str, input().split()))
-    short_cut_pos = []
+    cmds = input().split()
 
-    # 1. 첫 글자 단축키 확인
-    for w in range(len(cmds)):
-        if cmds[w][0].upper() in short_cut:
-            continue
-
-        short_cut.add(cmds[w][0].upper())
-        short_cut_pos.extend([w, 0])
-
-        break
-
-    # 2. 첫 글자 제외 단축키 확인
-    if not short_cut_pos:
-        for w in range(len(cmds)):
-            for c in range(len(cmds[w])):
-                if cmds[w][c].upper() in short_cut:
-                    continue
-
-                short_cut.add(cmds[w][c].upper())
-                short_cut_pos.extend([w, c])
-
-                break
-
-            if short_cut_pos:
-                break
+    short_cut_pos = find_shortcut(cmds, short_cut)
 
     if short_cut_pos:
-        w = short_cut_pos[0]
-        c = short_cut_pos[1]
-
+        w, c = short_cut_pos
         cmds[w] = cmds[w][:c] + "[" + cmds[w][c] + "]" + cmds[w][c + 1 :]
-
         print(" ".join(cmds))
     else:
         # 3. 단축키가 하나도 안되면 그냥 출력
