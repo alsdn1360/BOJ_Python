@@ -1,3 +1,7 @@
+import sys
+
+input = sys.stdin.readline
+
 # main
 n = int(input())
 
