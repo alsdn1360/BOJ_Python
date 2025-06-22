@@ -7,13 +7,13 @@ def bt():
         return
 
     for i, num in enumerate(nums):
-        if i not in visited:
+        if not visited[i]:
             answer.append(num)
-            visited.append(i)
+            visited[i] = True
 
             bt()
 
-            visited.pop()
+            visited[i] = False
             answer.pop()
 
 
@@ -22,7 +22,7 @@ n, m = map(int, input().split())
 nums = sorted(list(map(int, input().split())))
 
 answer = []
-visited = []
+visited = [False] * n
 prev = set()
 
 bt()
