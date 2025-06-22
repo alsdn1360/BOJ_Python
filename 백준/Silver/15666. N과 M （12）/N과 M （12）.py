@@ -1,4 +1,3 @@
-# main
 def bt(start):
     if len(answer) == m:
         print(*answer)
