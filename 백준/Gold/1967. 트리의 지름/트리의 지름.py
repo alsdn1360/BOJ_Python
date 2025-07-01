@@ -36,15 +36,13 @@ for _ in range(n - 1):
     tree[u].append((v, w))
     tree[v].append((u, w))
 
-costs = dijkstra(tree, 1)
+# 루트로 부터 모든 노드까지의 거리
+costs_from_root = dijkstra(tree, 1)
 
-# 루트에서 가장 멀리 있는 노드들
-max_nodes = [u for u, v in costs.items() if v == max(costs.values())]
+# 그 중에서 가장 먼 노드
+fartest_node = max(costs_from_root, key=costs_from_root.get)
 
-answer = 0
+# 가장 먼 노드에서 모든 노드까지의 거리
+costs_from_fartest_node = dijkstra(tree, fartest_node)
 
-# 가장 먼 노드에서 또 가장 먼 노드 사이의 거리
-for start in max_nodes:
-    answer = max(answer, max(dijkstra(tree, start).values()))
-
-print(answer)
+print(max(costs_from_fartest_node.values()))
