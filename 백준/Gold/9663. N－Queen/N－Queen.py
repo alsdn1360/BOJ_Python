@@ -1,10 +1,6 @@
-def check_queen(new_r, new_c):
-    # 0 ~ (r - 1)행까지 이전의 놓인 퀸들의 위치 확인
-    for prev_r in range(new_r):
-        prev_c = col[prev_r]
-
-        if prev_c == new_c or abs(new_r - prev_r) == abs(new_c - prev_c):
-            return False
+def check_queen(r, c):
+    if col[c] or diag1[r + c] or diag2[r - c]:
+        return False
 
     return True
 
@@ -17,11 +13,15 @@ def place_queen(r):
 
     for c in range(n):
         if check_queen(r, c):
-            col[r] = c
+            col[c] = True
+            diag1[r + c] = True
+            diag2[r - c] = True
 
             cnt += place_queen(r + 1)
 
-            col[r] = -1  # 백트래킹
+            col[c] = False
+            diag1[r + c] = False
+            diag2[r - c] = False
 
     return cnt
 
@@ -29,6 +29,8 @@ def place_queen(r):
 # main
 n = int(input())
 
-col = [-1] * n  # col[i] = j: i번째 행에는 j번 열에 퀸이 있음을 저장한 배열
+col = [False] * n
+diag1 = [False] * (2 * n - 1)
+diag2 = [False] * (2 * n - 1)
 
 print(place_queen(0))
