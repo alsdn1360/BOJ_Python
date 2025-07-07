@@ -25,8 +25,6 @@ def bfs():
             return visited[x][y][broken_state]
 
         for dx, dy in MOVES:
-            
-
             nx, ny = x + dx, y + dy
 
             if in_bound(nx, ny):
