@@ -9,8 +9,12 @@ t = int(input())
 for _ in range(t):
     p = input().rstrip()
     n = int(input())
-    x = input().rstrip()
-    x = deque(x[1:-1].split(","))
+    x = input().rstrip()[1:-1]
+
+    if n > 0:
+        x = deque(x.split(","))
+    else:
+        x = deque()
 
     is_reverse = False
     is_error = False
@@ -19,7 +23,7 @@ for _ in range(t):
         if oper == "R":
             is_reverse = not is_reverse
         else:
-            if n == 0:
+            if not x:
                 is_error = True
                 break
 
@@ -28,9 +32,10 @@ for _ in range(t):
             else:
                 x.popleft()
 
-            n -= 1
+    if is_error:
+        print("error")
+    else:
+        if is_reverse:
+            x.reverse()
 
-    if is_reverse:
-        x.reverse()
-
-    print("error") if is_error else print("[" + ",".join(x) + "]")
+        print(f'[{",".join(x)}]')
