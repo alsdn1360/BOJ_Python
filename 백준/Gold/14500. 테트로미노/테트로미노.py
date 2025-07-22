@@ -1,3 +1,7 @@
+import sys
+
+input = sys.stdin.readline
+
 MOVES = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
 
@@ -9,12 +13,10 @@ def in_bound(nx, ny):
 def dfs(x, y, depth, curr_sum):
     global answer
 
-    # 블록 4개를 모두 선택했을 때 최댓값 갱신
     if depth == 4:
         answer = max(answer, curr_sum)
         return
 
-    # 상하좌우로 이동하며 다음 블록 탐색
     for dx, dy in MOVES:
         nx, ny = x + dx, y + dy
 
@@ -42,7 +44,7 @@ def check_T_shape(x, y):
 
             # 날개 하나라도 범위를 벗어나면 이 모양은 만들 수 없음
             if not in_bound(nx, ny):
-                temp_sum = 0  # 합계를 0으로 만들어 무효화
+                temp_sum = 0
                 break
 
             temp_sum += paper[nx][ny]
