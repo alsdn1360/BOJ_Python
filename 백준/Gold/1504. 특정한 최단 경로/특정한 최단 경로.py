@@ -3,7 +3,7 @@ import sys, heapq
 input = sys.stdin.readline
 
 
-def dijkstra(start, target):
+def dijkstra(start):
     costs = {node: float("inf") for node in range(1, n + 1)}
     costs[start] = 0
 
@@ -23,7 +23,7 @@ def dijkstra(start, target):
                 costs[nxt_node] = cost
                 heapq.heappush(heap, (cost, nxt_node))
 
-    return costs[target]
+    return costs
 
 
 # main
@@ -38,6 +38,13 @@ for _ in range(e):
 
 v1, v2 = map(int, input().split())
 
-answer = min(dijkstra(1, v1) + dijkstra(v1, v2) + dijkstra(v2, n), dijkstra(1, v2) + dijkstra(v2, v1) + dijkstra(v1, n))
+costs_from_1 = dijkstra(1)
+costs_from_v1 = dijkstra(v1)
+costs_from_v2 = dijkstra(v2)
+
+path1 = costs_from_1[v1] + costs_from_v1[v2] + costs_from_v2[n]
+path2 = costs_from_1[v2] + costs_from_v2[v1] + costs_from_v1[n]
+
+answer = min(path1, path2)
 
 print(-1) if answer >= float("inf") else print(answer)
