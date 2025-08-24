@@ -1,5 +1,5 @@
 from collections import deque
-import sys, math
+import sys
 
 input = sys.stdin.readline
 
@@ -39,8 +39,8 @@ for _ in range(t):
             nx, ny = x + dx, y + dy
 
             if in_bound(nx, ny):
-                a[nx][ny] += math.trunc(curr_dust / 5)
-                a[x][y] -= math.trunc(curr_dust / 5)
+                a[nx][ny] += curr_dust // 5
+                a[x][y] -= curr_dust // 5
 
     # 위쪽 공기청정기 가동(반시계 방향)
     temp_nxt = 0
@@ -97,7 +97,6 @@ for _ in range(t):
         temp_nxt = a[i][0]
         a[i][0] = temp_prev
         temp_prev = temp_nxt
-
 
 # 공기청정기 부분 -2 보정
 ans = 2
