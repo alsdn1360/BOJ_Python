@@ -10,7 +10,7 @@ def dijkstra(start, end):
     queue = []
     heapq.heappush(queue, (0, start))
 
-    prev_cities = {city: 0 for city in range(1, n + 1)}
+    prev_city = {city: 0 for city in range(1, n + 1)}
 
     while queue:
         curr_cost, curr_city = heapq.heappop(queue)
@@ -24,9 +24,9 @@ def dijkstra(start, end):
             if costs[nxt_city] > total_cost:
                 costs[nxt_city] = total_cost
                 heapq.heappush(queue, (total_cost, nxt_city))
-                prev_cities[nxt_city] = curr_city
+                prev_city[nxt_city] = curr_city
 
-    return costs[end], prev_cities
+    return costs[end], prev_city
 
 
 # main
@@ -37,25 +37,20 @@ buses = {city: [] for city in range(1, n + 1)}
 
 for _ in range(m):
     s, e, c = map(int, input().split())
-
     buses[s].append((e, c))
 
 start, end = map(int, input().split())
 
 # 최소 비용 구하기
-min_cost, prev_cities = dijkstra(start, end)
+min_cost, prev_city = dijkstra(start, end)
 
 # 경로 구하기
-prev_city = end
-path = [prev_city]
+path = [end]
+curr_city = end
 
-while True:
-    prev_city = prev_cities[prev_city]
-    
-    path.append(prev_city)
-
-    if prev_city == start:
-        break
+while curr_city != start:
+    curr_city = prev_city[curr_city]
+    path.append(curr_city)
 
 print(min_cost)
 print(len(path))
