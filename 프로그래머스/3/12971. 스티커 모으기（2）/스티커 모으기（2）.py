@@ -13,7 +13,7 @@ def solve(sticker):
     
 
 def solution(sticker):
-    if len(sticker) == 1 or len(sticker) == 2:
+    if len(sticker) <= 2:
         return max(sticker)
         
     
