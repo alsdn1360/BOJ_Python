@@ -5,25 +5,22 @@ def solution(a):
     if n <= 2:
         return n
     
-    # 하나의 기준에서 왼쪽에 대한 최솟값 구하기
-    l_min = [0] * n
-    l_min[0] = a[0]
+    survive_idx = set()
     
-    for i in range(1, n):
-        l_min[i] = min(l_min[i - 1], a[i])
-        
-    # 하나의 기준에서 오른쪽에 대한 최솟값 구하기
-    r_min = [0] * n
-    r_min[n - 1] = a[n - 1]
+    min_num = a[0]
     
-    for i in range(n - 2, -1, -1):
-        r_min[i] = min(r_min[i + 1], a[i])
-        
-    # 양쪽 끝은 무조건 살아남으므로 2에서 시작
-    ans = 2
-        
-    for i in range(1, n - 1):
-        if l_min[i - 1] > a[i] or r_min[i + 1] > a[i]:
-            ans += 1
+    for i in range(n):
+        # 가장 작은 값이 자기자신일 수도 있음
+        if min_num >= a[i]:
+            min_num = a[i]
+            survive_idx.add(i)
+            
+    min_num = a[-1]
     
-    return ans
+    for i in range(n - 1, -1, -1):
+        # 가장 작은 값이 자기자신일 수도 있음
+        if min_num >= a[i]:
+            min_num = a[i]
+            survive_idx.add(i)
+            
+    return len(survive_idx)
