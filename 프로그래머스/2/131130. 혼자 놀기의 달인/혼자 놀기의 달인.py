@@ -1,39 +1,25 @@
-'''
-1. 가능한 최고의 점수를 얻어야 함
-2. 일단 그룹을 나눠야할 것 같음
-3. 1번 그룹와 2번 그룹의 상자 개수로만 점수가 나옴
-'''
-
-def solution(cards):
-    answer = 0
-    
-    opened = [False] * (len(cards) + 1)
-    
+def solution(cards):   
+    opened = [False] * (len(cards))
     groups = []
-    group_idx = 0
     
     for i, card in enumerate(cards):
         # 이미 열려있는 상자라면 패스
-        if opened[card - 1]:
+        if opened[i]:
             continue
             
         group_cnt = 0
+        curr_idx = i
         
-        curr_card_idx = i
-        curr_card = card
-        
-        while not opened[curr_card_idx]:
+        while not opened[curr_idx]:
+            opened[curr_idx] = True
+            
             group_cnt += 1
-            
-            opened[curr_card_idx] = True
-            
-            curr_card_idx = curr_card - 1
-            curr_card = cards[curr_card_idx]
+            curr_idx = cards[curr_idx] - 1
             
         groups.append(group_cnt)
-            
-    for i in range(len(groups)):
-        for j in range(i + 1, len(groups)):
-            answer = max(answer, groups[i] * groups[j])
+        
+    # 가장 큰 값 두개만 찾으면 됨
+    groups.sort(reverse = True)
     
-    return answer
+    # 그룹이 하나밖에 없을 때 점수는 0
+    return groups[0] * groups[1] if len(groups) > 1 else 0
