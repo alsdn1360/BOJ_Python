@@ -3,63 +3,68 @@ import sys
 input = sys.stdin.readline
 
 
-def find(tree, x):
-    if tree[x] == x:
+# MST 구현
+def find(x):
+    if parents[x] == x:
         return x
 
-    tree[x] = find(tree, tree[x])
+    parents[x] = find(parents[x])
 
-    return tree[x]
+    return parents[x]
 
 
-def union(tree, rank, x, y):
-    xroot = find(tree, x)
-    yroot = find(tree, y)
+def union(x, y):
+    xroot = find(x)
+    yroot = find(y)
 
     if rank[xroot] > rank[yroot]:
-        tree[yroot] = xroot
+        parents[yroot] = xroot
     elif rank[yroot] > rank[xroot]:
-        tree[xroot] = yroot
+        parents[xroot] = yroot
     else:
-        tree[xroot] = yroot
+        parents[xroot] = yroot
         rank[yroot] += 1
 
 
 # main
 n, m = map(int, input().split())
 
-computers = [i for i in range(n + 1)]
+parents = [i for i in range(n + 1)]
 rank = [0 for _ in range(n + 1)]
 
+# 연결되어 있는 지사 컴퓨터들을 묶어줌
 for _ in range(m):
     x, y = map(int, input().split())
-    union(computers, rank, x, y)
+    union(x, y)
 
 costs = [list(map(int, input().split())) for _ in range(n)]
 
-networks = []
+edges = []
 
+# 본사 컴퓨터인 1번 컴퓨터는 모든 지사의 네트워크 컴퓨터와 연결되어있으므로 볼 필요 없음
 for i in range(1, n):
-    for j in range(1, n):
-        if costs[i][j] == 0:
+    for j in range(i + 1, n):
+        cost, x, y = costs[i][j], i + 1, j + 1
+
+        if cost == 0:
             continue
 
-        networks.append((costs[i][j], i + 1, j + 1))
+        edges.append((cost, x, y))
 
-networks.sort()
+edges.sort()
 
 total_cost = 0
-new_networks = []
+new_edges = []
 
-for cost, x, y in networks:
+for cost, x, y in edges:
     # 루트가 다르면 연결되어 있지 않기 때문에 연결해줘야 함
-    if find(computers, x) != find(computers, y):
-        union(computers, rank, x, y)
+    if find(x) != find(y):
+        union(x, y)
         total_cost += cost
-        new_networks.append((x, y))
+        new_edges.append((x, y))
 
-print(total_cost, len(new_networks))
+print(total_cost, len(new_edges))
 
-if new_networks:
-    for x, y in new_networks:
+if new_edges:
+    for x, y in new_edges:
         print(x, y)
