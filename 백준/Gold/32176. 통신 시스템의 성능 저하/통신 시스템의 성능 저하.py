@@ -11,12 +11,12 @@ def get_p(base, selected_nodes):
 
 
 def get_u(selected_nodes):
-    a, b, c, d = float("inf"), float("inf"), 0, 0
+    if not selected_nodes:
+        return 0
 
-    for i, j in selected_nodes:
-        a, b, c, d = min(a, i), min(b, j), max(c, i), max(d, j)
+    rows, cols = zip(*selected_nodes)
 
-    return (c + 1 - a) * (d + 1 - b)  # 0-indexed 보정으로 +1
+    return (max(rows) - min(rows) + 1) * (max(cols) - min(cols) + 1)  # 0-indexed 보정으로 +1
 
 
 def get_max_c(nodes, k, base):
