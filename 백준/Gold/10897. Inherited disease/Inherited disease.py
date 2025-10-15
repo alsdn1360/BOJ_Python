@@ -1,8 +1,10 @@
 from math import factorial
 
+MOD = 10**9 + 7
 
-def get_curr_child_num(parent_num, gen, child_num):
-    return (prev_j[gen - 1] + (parent_num - prev_j[gen - 2] - 1) * gen + child_num) % 1000000007
+
+def get_child_num(parent_num, gen, d_i):
+    return (prev_j[gen - 1] + (parent_num - prev_j[gen - 2] - 1) * gen + d_i) % MOD
 
 
 # main
@@ -13,15 +15,17 @@ d = list(map(int, input().split()))
 prev_j = [0] * 100
 
 for i in range(1, 100):
-    prev_j[i] += (prev_j[i - 1] + factorial(i)) % 1000000007
+    prev_j[i] += (prev_j[i - 1] + factorial(i)) % MOD
 
-curr_parent_num = 1
+parent_num = 1  # 첫 부모 번호
 
-for i, d_i in enumerate(d):
-    if i + 1 == 1:
+for gen, d_i in enumerate(d, start=1):
+    if gen == 1:
         print(1)
         continue
 
-    curr_child_num = get_curr_child_num(curr_parent_num, i + 1, d_i)
-    print(curr_child_num)
-    curr_parent_num = curr_child_num
+    child_num = get_child_num(parent_num, gen, d_i)
+
+    print(child_num)
+
+    parent_num = child_num
