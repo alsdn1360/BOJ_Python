@@ -41,7 +41,6 @@ def dfs(graph, visited, curr_v):
 # main
 n = int(input())
 d = [list(input().rstrip()) for _ in range(n)]
-d_idx = [[(i, j) for j in range(n)] for i in range(n)]  # 도미노 위치
 
 min_ans = float("inf")
 max_ans = float("-inf")
@@ -52,7 +51,7 @@ for perm in permutations(range(n), n):
 
     # 선택한 도미노의 위치 체크
     for i, j in enumerate(perm):
-        selected_d.append(d_idx[i][j])
+        selected_d.append((i, j))
 
     temp_score = 1
     graph = defaultdict(int)
