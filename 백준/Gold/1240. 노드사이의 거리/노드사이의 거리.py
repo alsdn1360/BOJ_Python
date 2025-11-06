@@ -1,27 +1,24 @@
-import heapq
+from collections import deque
 
 
-def dijkstra(graph, start, end):
-    costs = {node: float("inf") for node in range(1, n + 1)}
-    costs[start] = 0
+def bfs(graph, start, end):
+    queue = deque([(start, 0)])
 
-    queue = []
-    heapq.heappush(queue, (0, start))
+    visited = set()
+    visited.add(start)
 
     while queue:
-        curr_cost, curr_node = heapq.heappop(queue)
+        curr_node, curr_cost = queue.popleft()
 
-        if curr_cost < costs[curr_node]:
-            continue
+        if curr_node == end:
+            return curr_cost
 
-        for cost_to_adj_node, adj_node in graph[curr_node]:
-            cost = curr_cost + cost_to_adj_node
+        for adj_node, cost_to_adj_node in graph[curr_node]:
+            if adj_node not in visited:
+                queue.append((adj_node, curr_cost + cost_to_adj_node))
+                visited.add(adj_node)
 
-            if cost < costs[adj_node]:
-                costs[adj_node] = cost
-                heapq.heappush(queue, (cost, adj_node))
-
-    return costs[end]
+    return
 
 
 # main
@@ -32,10 +29,10 @@ graph = {node: [] for node in range(1, n + 1)}
 for _ in range(n - 1):
     u, v, c = map(int, input().split())
 
-    graph[u].append((c, v))
-    graph[v].append((c, u))
+    graph[u].append((v, c))
+    graph[v].append((u, c))
 
 for _ in range(m):
     u, v = map(int, input().split())
 
-    print(dijkstra(graph, u, v))
+    print(bfs(graph, u, v))
