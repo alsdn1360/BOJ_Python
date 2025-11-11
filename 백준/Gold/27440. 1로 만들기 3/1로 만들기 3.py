@@ -7,13 +7,11 @@ n = int(input())
 queue = deque([(n, 0)])
 visited = {n}
 
-answer = float("inf")
-
 while queue:
     x, cnt = queue.popleft()
 
     if x == 1:
-        answer = min(answer, cnt)
+        print(cnt)
         break
 
     if x % 3 == 0:
@@ -35,5 +33,3 @@ while queue:
     if nx not in visited:
         queue.append((nx, cnt + 1))
         visited.add(nx)
-
-print(answer)
