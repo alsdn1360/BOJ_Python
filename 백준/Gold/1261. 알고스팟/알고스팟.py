@@ -11,29 +11,27 @@ def in_bound(nx, ny):
 
 
 def bfs():
-    queue = deque([(0, 0)])  # x, y, 부순 벽의 갯수
+    queue = deque([(0, 0, 0)])  # x, y, 부순 벽의 갯수
 
-    costs = [[float("inf") for _ in range(M)] for _ in range(N)]  # 0 혹은 1을 비용으로 생각함
-    costs[0][0] = 0
+    visited = [[False for _ in range(M)] for _ in range(N)]
+    visited[0][0] = True
 
     while queue:
-        x, y = queue.popleft()
+        x, y, cnt = queue.popleft()
+
+        if (x, y) == (N - 1, M - 1):
+            return cnt
 
         for dx, dy in MOVES:
             nx, ny = x + dx, y + dy
 
-            if in_bound(nx, ny):
-                ncost = costs[x][y] + maze[x][y]  # 지금 위치와 새로운 위치에서의 비용을 구함
+            if in_bound(nx, ny) and not visited[nx][ny]:
+                if maze[nx][ny] == 0:
+                    queue.appendleft((nx, ny, cnt))  # 비용이 더 적은 것을 먼저 탐색할 수 있도록 왼쪽에 넣어줌
+                else:
+                    queue.append((nx, ny, cnt + 1))
 
-                if ncost < costs[nx][ny]:
-                    costs[nx][ny] = ncost
-
-                    if maze[nx][ny] == 0:
-                        queue.appendleft((nx, ny))  # 비용이 0이면 앞에 넣어서 우선적으로 탐색하게 함
-                    else:
-                        queue.append((nx, ny))
-
-    return costs[N - 1][M - 1]
+                visited[nx][ny] = True
 
 
 # main
