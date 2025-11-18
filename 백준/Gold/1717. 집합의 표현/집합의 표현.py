@@ -22,7 +22,7 @@ def union(rank, tree, x, y):
         tree[y_root] = x_root
     else:
         tree[y_root] = x_root
-        rank[x_root] + 1
+        rank[x_root] += 1
 
 
 # main
