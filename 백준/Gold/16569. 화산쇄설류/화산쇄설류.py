@@ -49,21 +49,29 @@ X, Y = map(int, input().split())
 X, Y = X - 1, Y - 1
 
 H = [list(map(int, input().split())) for _ in range(M)]
+
+cover_pyroclast_times = [[float("inf") for _ in range(N)] for _ in range(M)]
 T = []
+v_queue = deque()
 
 for _ in range(V):
     x, y, t = map(int, input().split())
-    T.append((x - 1, y - 1, t))
+    x, y = x - 1, y - 1
 
-# 화산쇄설류가 덥쳐지는 시간을 미리 구함
-cover_pyroclast_times = [[float("inf") for _ in range(N)] for _ in range(M)]
+    if cover_pyroclast_times[x][y] > t:
+        cover_pyroclast_times[x][y] = t
+        T.append((x, y, t))
+        v_queue.append((x, y, t))
 
-for u in range(M):
-    for v in range(N):
-        for x, y, t in T:
-            cover_pyroclast_time = t + abs(u - x) + abs(v - y)
+while v_queue:
+    x, y, curr_t = v_queue.popleft()
 
-            # 가장 빨리 도달하는 화산쇄설류 시간을 적용
-            cover_pyroclast_times[u][v] = min(cover_pyroclast_times[u][v], cover_pyroclast_time)
+    for dx, dy in MOVES:
+        nx, ny = x + dx, y + dy
+
+        if in_bound(nx, ny):
+            if cover_pyroclast_times[nx][ny] > curr_t + 1:
+                cover_pyroclast_times[nx][ny] = curr_t + 1
+                v_queue.append((nx, ny, curr_t + 1))
 
 print(*bfs())
