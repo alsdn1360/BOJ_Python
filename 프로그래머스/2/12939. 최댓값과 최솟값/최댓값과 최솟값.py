@@ -1,4 +1,5 @@
 def solution(s):
-    arr = sorted(list(map(int, s.split())))
+    num_s = sorted(list(map(int, s.split(' '))))
     
-    return str(arr[0]) + ' ' + str(arr[-1])
+    return f"{num_s[0]} {num_s[-1]}"
+    
