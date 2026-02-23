@@ -1,15 +1,16 @@
 def solution(n):
-    answer = n + 1
+    answer = 0
     
-    # n의 1의 갯수 세기
-    bin_n_cnt = format(n, 'b').count('1')
+    b_n = str(format(n, 'b'))
+    b_n_zero = b_n.count('1')
+    
+    nxt_n = n + 1
     
     while True:
-        bin_answer_cnt = format(answer, 'b').count('1')
+        nxt_b_n = str(format(nxt_n, 'b'))
+        nxt_b_n_cnt = nxt_b_n.count('1')
         
-        if bin_answer_cnt == bin_n_cnt:
-            return answer
-        
-        answer += 1
-    
-    return answer
+        if b_n_zero == nxt_b_n_cnt:
+            return nxt_n
+        else:
+            nxt_n += 1
