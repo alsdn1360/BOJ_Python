@@ -1,15 +1,12 @@
 def solution(n):
-    answer = 1
+    answer = 0
+    curr_loc = n
     
-    while True:
-        if n == 1:
-            return answer
-        
-        # n이 짝수면 점프할 필요없이 순간이동함
-        if n % 2 == 0:
-            n = n / 2
-        # n이 홀수면 한 칸 점프하고 순간이동함
+    while curr_loc > 0:
+        if curr_loc % 2 == 0:
+            curr_loc = curr_loc // 2
         else:
+            curr_loc -= 1
             answer += 1
-            # 점프하기 때문에 n-1
-            n = (n - 1) / 2
+            
+    return answer
