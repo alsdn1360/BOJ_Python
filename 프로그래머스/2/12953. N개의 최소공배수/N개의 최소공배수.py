@@ -1,23 +1,20 @@
-# 최대공약수
-def gcd(a, b):
-    while b > 0:
-        a, b = b, a % b
-        
-    return a
+from math import gcd
 
-# 최소공배수
 def lcm(a, b):
-    return (a * b) // gcd(a, b)
+    return (a * b) // gcd(a,b)
+
 
 def solution(arr):
-    answer = 1
-    
     n = len(arr)
     
     if n == 1:
         return arr[0]
+    elif n == 2:
+        return lcm(arr[0], arr[1])
     else:
-        for num in arr:
-            answer = lcm(answer, num)
+        answer = lcm(arr[0], arr[1])
+        
+        for i in range(2, n):
+            answer = lcm(answer, arr[i])
     
-    return answer
+        return answer
