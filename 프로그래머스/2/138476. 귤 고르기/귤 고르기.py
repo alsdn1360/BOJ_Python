@@ -1,18 +1,21 @@
-from collections import Counter
+from collections import defaultdict
 
 def solution(k, tangerine):
-    answer = 0
+    tangerines = defaultdict(int)
     
-    # 귤의 종류 별 개수를 세서 많은 것 부터 내림차순으로 리스트를 만듦
-    tangerine_cnt = Counter(tangerine).most_common()
-    n = len(tangerine_cnt)
-    
-    for i in range(n):
-        if k <= 0:
-            break
+    for t in tangerine:
+        tangerines[t] += 1
         
-        # 귤 종류의 개수가 많은 것부터 빼줌
-        k -= tangerine_cnt[i][1]
+    sorted_tangerines = sorted(tangerines.items(), key=lambda x:x[1], reverse=True)
+    
+    total_cnt = 0
+    answer = 0
+        
+    for _, cnt in sorted_tangerines:
+        total_cnt += cnt
         answer += 1
+        
+        if total_cnt >= k:
+            break
     
     return answer
