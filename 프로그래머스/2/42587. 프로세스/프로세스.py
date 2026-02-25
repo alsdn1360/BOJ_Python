@@ -3,26 +3,20 @@ from collections import deque
 def solution(priorities, location):
     answer = 0
     
-    n = len(priorities)
-    
-    target_process = deque([False] * n)
-    target_process[location] = True
-    
-    priorities = deque(priorities)
+    processes = deque([(p, i == location) for i, p in enumerate(priorities)])
     
     run_process = max(priorities)
     
-    while priorities:
-        process, is_target = priorities.popleft(), target_process.popleft()
+    while processes:
+        process, is_target = processes.popleft()
         
-        if process >= run_process:
+        if process == run_process:
             answer += 1
             
             if is_target:
                 return answer
             
-            run_process = max(priorities)
-        else:      
-            priorities.append(process)
-            target_process.append(is_target)
-    
+            run_process = max(p[0] for p in processes)
+        else:
+            processes.append((process, is_target))
+            
