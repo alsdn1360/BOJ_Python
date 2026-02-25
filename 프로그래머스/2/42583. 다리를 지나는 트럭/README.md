@@ -1,10 +1,10 @@
 # [level 2] 다리를 지나는 트럭 - 42583 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42583) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42583?language=python3) 
 
 ### 성능 요약
 
-메모리: 10.4 MB, 시간: 410.67 ms
+메모리: 9.3 MB, 시간: 137.44 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 22일 22:51:56
+2026년 02월 25일 18:57:35
 
 ### 문제 설명
 
