@@ -1,44 +1,30 @@
-import heapq
-
-
-def pop_max(heap):
-    temp_heap = []
-                    
-    while heap:
-        heapq.heappush(temp_heap, -heapq.heappop(heap))
-
-    max_num = -heapq.heappop(temp_heap)
-
-    while temp_heap:
-        heapq.heappush(heap, -heapq.heappop(temp_heap))
-        
-    return max_num, heap
+from collections import deque
 
 
 def solution(operations):
-    heap = []
+    queue = deque()
     
     for operation in operations:
         command, num = operation.split(' ')
+        num = int(num)
         
         if command == 'I':
-            heapq.heappush(heap, int(num))
+            queue.append(num)
         elif command == 'D':
-            if heap:
-                if num == '-1':
-                    heapq.heappop(heap)
-                elif num == '1':
-                    _, heap = pop_max(heap)
-    
-    if not heap:
+            if queue:
+                if num == -1:
+                    queue.popleft()
+                elif num == 1:
+                    queue.pop()
+
+        queue = deque(sorted(queue))
+        
+    if not queue:
         return [0, 0]
-    elif len(heap) == 1:
-        num = heapq.heappop(heap)
-        
-        return [num, num]
+    elif len(queue) == 1:
+        return [queue[0], queue[0]]
     else:
-        max_num, heap = pop_max(heap)
-        min_num = heapq.heappop(heap)
-        
-        return [max_num, min_num]
+        return [queue[-1], queue[0]]
+    
+    
     
