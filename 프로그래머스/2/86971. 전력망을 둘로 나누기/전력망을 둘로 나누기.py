@@ -1,37 +1,41 @@
-from collections import deque, defaultdict
+from collections import defaultdict, deque
+
+
+def bfs(tree, n, v1, v2):
+    queue = deque([v1])
+    
+    visited = [False] * (n + 1)
+    visited[v1], visited[v2] = True, True
+    
+    cnt = 1
+    
+    while queue:
+        v = queue.popleft()
+        
+        for adj_v in tree[v]:
+            if not visited[adj_v]:
+                queue.append(adj_v)
+                visited[adj_v] = True
+                cnt += 1
+                
+    return cnt
+            
 
 def solution(n, wires):
-    answer = []
+    answer = float('inf')
     
-    # 간선을 하나씩 뛰어넘어가면서 연결 요소 수를 세기 위함
-    for step in range(n - 1):
-        tree = defaultdict(list)
+    tree = defaultdict(list)
+    
+    for v1, v2 in wires:
+        tree[v1].append(v2)
+        tree[v2].append(v1)
         
-        # 해당하는 간선은 제외하고 tree에 넣음
-        for i, (v1, v2) in enumerate(wires):
-            if step == i:
-                continue
-                
-            tree[v1].append(v2)
-            tree[v2].append(v1)
+    cnt = 0
+        
+    for v1 in tree.keys():
+        for v2 in tree[v1]:
+            cnt = bfs(tree, n, v1, v2)
             
-        # 전부 연결되어 있으니 시작은 1부터
-        queue = deque([1])
-        visited = set()
-        visited.add(1)
-        
-        tower_cnt = 1
-        
-        while queue:
-            curr_tower = queue.popleft()
+            answer = min(answer, abs(n - 2 * cnt))
             
-            for adj_tower in tree[curr_tower]:
-                if adj_tower not in visited:
-                    queue.append(adj_tower)
-                    visited.add(adj_tower)
-                    tower_cnt += 1
-                 
-        # (n - tower_cnt)에서 또 tower_cnt를 빼줘야 함 
-        answer.append(abs(n - (2 * tower_cnt)))
-        
-    return min(answer)
+    return answer
