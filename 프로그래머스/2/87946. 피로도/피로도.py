@@ -1,19 +1,30 @@
-def dfs(k, dungeons, visited, cnt):
-    max_cnt = cnt
+def bt(n, k, dungeons, cnt, visited):
+    global answer
     
-    for i, (min_fati, use_fati) in enumerate(dungeons):
-        if not visited[i] and k >= min_fati:
+    answer = max(answer, cnt)
+    
+    for i, (need_fatigue, fatigue) in enumerate(dungeons):
+        if not visited[i] and k >= need_fatigue:
             visited[i] = True
-            
-            max_cnt = max(max_cnt, dfs(k - use_fati, dungeons, visited, cnt + 1))
-            
+            k -= fatigue
+            cnt += 1
+        
+            bt(n, k, dungeons, cnt, visited)
+
+            cnt -= 1
+            k += fatigue
             visited[i] = False
-            
-    return max_cnt
+        
 
 def solution(k, dungeons):
-    visited = [False] * len(dungeons)
+    global answer
+    answer = -1
     
-    return dfs(k, dungeons, visited, 0)
+    n = len(dungeons)
     
-        
+    dungeons.sort(key = lambda x : (-x[0], x[1]))
+    visited = [False] * n
+    
+    bt(n, k, dungeons, 0, visited)
+    
+    return answer
