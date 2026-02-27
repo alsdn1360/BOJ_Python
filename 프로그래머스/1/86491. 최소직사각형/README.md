@@ -1,10 +1,10 @@
 # [level 1] 최소직사각형 - 86491 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/86491?language=kotlin) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/86491?language=python3) 
 
 ### 성능 요약
 
-메모리: 72.2 MB, 시간: 18.99 ms
+메모리: 10.8 MB, 시간: 2.06 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 04월 21일 19:51:29
+2026년 02월 27일 12:31:38
 
 ### 문제 설명
 
