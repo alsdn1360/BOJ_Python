@@ -1,29 +1,32 @@
 from itertools import permutations
+from math import sqrt
 
-# 소수 판별
-def is_prime(num):
-    if num <= 1:
+
+def is_prime(n):
+    if n < 2:
         return False
     
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % i == 0:
+    for i in range(2, int(sqrt(n)) + 1):
+        if n % i == 0:
             return False
         
     return True
 
+
 def solution(numbers):
     answer = 0
+    n = len(numbers)
     
-    # 겹치는 숫자 없이
-    combi = set()
+    papers = list(numbers)
     
-    # 종이 조각을 이용해서 만들 수 있는 모든 숫자 순열
-    for i in range(1, len(numbers) + 1):
-        for comb in permutations(numbers, i):
-            combi.add(int(''.join(comb)))
-            
-    for num in combi:
-        if is_prime(num):
+    made_nums = set()
+    
+    for i in range(1, n + 1):
+        for permu in permutations(papers, i):
+            made_nums.add(int(''.join(permu)))
+    
+    for made_num in made_nums:
+        if is_prime(made_num):
             answer += 1
-    
+            
     return answer
