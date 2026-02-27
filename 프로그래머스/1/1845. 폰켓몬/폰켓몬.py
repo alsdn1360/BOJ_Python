@@ -1,9 +1,16 @@
+from collections import defaultdict
+
 def solution(nums):
-    N = len(nums)
+    answer = 0
     
-    # 중복을 제거하면 폰켓몬 종류만 남음
-    ponkemon = set(nums)
+    choice_cnt = len(nums) // 2
     
-    # N / 2마리랑 종류의 개수 중에 더 작은 값 고르면 됨
-    return min(N / 2, len(ponkemon))
+    ponkemon = defaultdict(int)
     
+    for num in nums:
+        ponkemon[num] = 1
+
+    for cnt in ponkemon.values():
+        answer += 1
+    
+    return answer if answer <= choice_cnt else choice_cnt
