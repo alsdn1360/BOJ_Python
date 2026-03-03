@@ -1,32 +1,39 @@
-from collections import deque
-
-# 알파벳이 하나만 다른 단어 찾기
-def is_different(word1, word2):
-    cnt = 0
+def check_diff_one(word1, word2):
+    diff_cnt = 0
     
-    for c1, c2 in zip(word1, word2):
+    for (c1, c2) in zip(word1, word2):
         if c1 != c2:
-            cnt += 1
+            diff_cnt += 1
             
-    return cnt == 1
+        if diff_cnt > 1:
+            return False
+            
+    return True if diff_cnt == 1 else False
 
-def bfs(begin, target, words):
-    queue = deque([(begin, 0)])
-    visited = set([begin])
-    
-    while queue:
-        curr_word, step = queue.popleft()
-        
-        if curr_word == target:
-            return step
-        
-        for word in words:
-            if word not in visited and is_different(curr_word, word):
-                visited.add(word)
-                queue.append((word, step + 1))
-    
+
 def solution(begin, target, words):
     if target not in words:
         return 0
     
-    return bfs(begin, target, words)
+    answer = float('inf')
+    n = len(words)
+    
+    visited = [False] * n
+    
+    def dfs(visited, curr_word, cnt):
+        nonlocal answer
+        
+        if curr_word == target:
+            return cnt
+        
+        for i, word in enumerate(words):
+            if check_diff_one(curr_word, word) and not visited[i]:
+                visited[i] = True
+                
+                answer = min(answer, dfs(visited, word, cnt + 1))
+                
+                visited[i] = False
+                
+        return answer
+        
+    return dfs(visited, begin, 0)
