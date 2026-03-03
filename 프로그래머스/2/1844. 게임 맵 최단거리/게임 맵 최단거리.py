@@ -1,50 +1,38 @@
 from collections import deque
 
-MOVES = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
-def oob(nx, ny, n, m):
+MOVES = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+
+def in_bound(n, m, nx, ny):
     return 0 <= nx < n and 0 <= ny < m
 
-def bfs(maps, answer):
-    n = len(maps)
-    m = len(maps[0])
+
+def bfs(maps, n, m):
+    answer = float('inf')
     
-    # (출발 x, 출발 y, 현재 지난 칸) 초기화
-    queue = deque([(0, 0, 1)])
+    queue = deque([(0, 0, 1)]) # x, y, cnt
     
-    # 방문 여부 초기화
-    visited = [[False] * m for _ in range(n)]
+    visited = [[False for _ in range(m)] for _ in range(n)]
     visited[0][0] = True
     
-    # 출발칸으로부터 거리 초기화
-    grid = [[0] * m for _ in range(n)]
-    grid[0][0] = 1
-    
-    is_escape = False
-    
     while queue:
-        x, y, distance = queue.popleft()
+        x, y, cnt = queue.popleft()
         
-        if x == n - 1 and y == m - 1:
-            is_escape = True
-            answer = grid[x][y]
-            break
-        
+        if (x, y) == (n - 1, m - 1):
+            answer = min(answer, cnt)
+            
         for dx, dy in MOVES:
             nx, ny = x + dx, y + dy
             
-            if oob(nx, ny, n, m) and not visited[nx][ny] and maps[nx][ny] == 1:
-                queue.append((nx, ny, distance + 1))
+            if in_bound(n, m, nx, ny) and maps[nx][ny] == 1 and not visited[nx][ny]:
+                queue.append((nx, ny, cnt + 1))
                 visited[nx][ny] = True
-                grid[nx][ny] = distance + 1
-                
-    if is_escape:
-        return answer
-    else:
-        return -1
+    
+    return answer if answer != float('inf') else -1
+
 
 def solution(maps):
-    answer = 0
+    n, m = len(maps), len(maps[0])
     
-    return bfs(maps, answer)
-    
+    return bfs(maps, n, m)
