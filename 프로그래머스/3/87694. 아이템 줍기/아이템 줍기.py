@@ -1,51 +1,48 @@
 from collections import deque
 
-MOVES = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
-def oob(nx, ny):
-    return 0 <= nx < 102 and 0 <= ny < 102
+MAX_COOR = 102
+MOVES = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
-def bfs(board, start, end):
-    queue = deque([(start[0], start[1], 0)])
+
+def in_bound(nx, ny):
+    return 0 <= nx < MAX_COOR and 0 <= ny < MAX_COOR
+
+
+def solution(rectangle, characterX, characterY, itemX, itemY):
+    topo = [[0 for _ in range(MAX_COOR)] for _ in range(MAX_COOR)]
     
-    visited = [[False] * 102 for _ in range(102)]
-    visited[start[0]][start[1]] = True
+    for x1, y1, x2, y2 in rectangle:
+        x1, y1, x2, y2 = 2 * x1, 2 * y1, 2 * x2, 2 * y2
+        
+        for i in range(x1, x2 + 1):
+            for j in range(y1, y2 + 1):
+                if topo[i][j] == 2:
+                    continue
+                    
+                if i == x1 or i == x2 or j == y1 or j == y2:
+                    topo[i][j] = 1
+                else:
+                    topo[i][j] = 2
+                    
+    character_x, character_y =  2 * characterX, 2 * characterY
+    item_x, item_y = 2 * itemX, 2 * itemY
+    
+    # BFS
+    queue = deque([(character_x, character_y, 0)])
+    
+    visited = [[False for _ in range(MAX_COOR)] for _ in range(MAX_COOR)]
+    visited[character_x][character_y] = True
     
     while queue:
-        x, y, step = queue.popleft()
+        x, y, cnt = queue.popleft()
         
-        if (x, y) == end:
-            # 영역을 2배 확장했으니 2로 나눔
-            return step // 2
+        if (x, y) == (item_x, item_y):
+            return cnt // 2
         
         for dx, dy in MOVES:
             nx, ny = x + dx, y + dy
             
-            if oob(nx, ny) and not visited[nx][ny] and board[nx][ny]:
-                queue.append((nx, ny, step + 1))
+            if in_bound(nx, ny) and not visited[nx][ny] and topo[nx][ny] == 1:
+                queue.append((nx, ny, cnt + 1))
                 visited[nx][ny] = True
-
-def solution(rectangle, characterX, characterY, itemX, itemY): 
-    # 좌표 2배 확장: 최대 좌표 50*2 = 100, 여유분 포함하여 102×102 보드 생성
-    board = [[False] * 102 for _ in range(102)]
-    
-    # 모든 사각형 내부 채우기
-    for x1, y1, x2, y2 in rectangle:
-        x1, y1, x2, y2 = x1 * 2, y1 * 2, x2 * 2, y2 * 2
-        
-        for i in range(x1, x2 + 1):
-            for j in range(y1, y2 + 1):
-                board[i][j] = True
-
-    # 테두리만 남기기
-    for x1, y1, x2, y2 in rectangle:
-        x1, y1, x2, y2 = x1 * 2, y1 * 2, x2 * 2, y2 * 2
-        
-        for i in range(x1 + 1, x2):
-            for j in range(y1 + 1, y2):
-                board[i][j] = False
-                            
-    start = (characterX * 2, characterY * 2)
-    end = (itemX * 2, itemY * 2)
-    
-    return bfs(board, start, end)
