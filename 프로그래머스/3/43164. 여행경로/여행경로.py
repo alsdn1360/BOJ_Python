@@ -1,25 +1,35 @@
+from collections import defaultdict, deque
+
+
 def solution(tickets):
-    # 티켓 사전순 정렬
-    tickets.sort()
+    answer = []
     n = len(tickets)
-    used = [False] * n
-
-    def dfs(route):
-        if len(route) == n + 1:
-            return route
-        
-        for i in range(n):
-            # 현재 공항과 티켓 출발지가 일치하고, 티켓이 미사용인 경우
-            if route[-1] == tickets[i][0] and not used[i]:
-                used[i] = True  # 티켓 사용 표시
+    
+    airlines = defaultdict(list)
+    past_airlines = defaultdict(list)
+    
+    for ori, dest in tickets:
+        airlines[ori].append(dest)
+        past_airlines[ori].append(False)
+    
+    for ori, dests in airlines.items():        
+        airlines[ori] = sorted(dests)
+    
+    def dfs(curr_country):
+        if len(answer) == n + 1:
+            return True
+            
+        for i, nxt_country in enumerate(airlines[curr_country]):
+            if not past_airlines[curr_country][i]:
+                answer.append(nxt_country)
+                past_airlines[curr_country][i] = True
                 
-                result = dfs(route + [tickets[i][1]])
+                if dfs(nxt_country):
+                    return answer
                 
-                if result:
-                    return result
-                
-                used[i] = False  # 백트래킹
-                
-        return None
-
-    return dfs(["ICN"])
+                past_airlines[curr_country][i] = False
+                answer.pop()
+            
+    answer.append('ICN')
+    
+    return dfs('ICN')
