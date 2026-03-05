@@ -1,31 +1,24 @@
 def solution(sequence):
     n = len(sequence)
     
-    positive_seq = [] # 처음에 1을 곱한 수열 : 1, -1, 1...
-    negative_seq = [] # 처음에 -1을 곱한 수열 : -1, 1, -1...
+    pulse_seq1 = []
+    pulse_seq2 = []
     
-    for i in range(n):
-        num = sequence[i]
-        
-        if i % 2 == 0:
-            positive_seq.append(num)
-            negative_seq.append(num * (-1))
-        else:
-            positive_seq.append(num * (-1))
-            negative_seq.append(num)
-            
-    dp = [0] * n      
-    positive_dp = [0] * n
-    negative_dp = [0] * n
+    pulse = 1
     
-    dp[0] = max(positive_seq[0], negative_seq[0])
-    positive_dp[0] = positive_seq[0]
-    negative_dp[0] = negative_seq[0]
+    for num in sequence:
+        pulse_seq1.append(num * pulse)
+        pulse *= -1
+        pulse_seq2.append(num * pulse)
+
+    prefix_sum1 = [0] * (n + 1)
+    prefix_sum2 = [0] * (n + 1)
     
-    for i in range(1, n):
-        positive_dp[i] = max(positive_seq[i], positive_seq[i] + positive_dp[i - 1])
-        negative_dp[i] = max(negative_seq[i], negative_seq[i] + negative_dp[i - 1])
+    for i in range(1, n + 1):
+        prefix_sum1[i] = prefix_sum1[i - 1] + pulse_seq1[i - 1]
+        prefix_sum2[i] = prefix_sum2[i - 1] + pulse_seq2[i - 1]
         
-        dp[i] = max(positive_dp[i], negative_dp[i])
-        
-    return max(dp)
+    pulse_sum1 = max(prefix_sum1) - min(prefix_sum1)
+    pulse_sum2 = max(prefix_sum2) - min(prefix_sum2)
+    
+    return max(pulse_sum1, pulse_sum2)
