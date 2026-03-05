@@ -1,31 +1,35 @@
 from collections import defaultdict, deque
 
-def bfs(n, graph):
-    # 시작 노드, 거리
-    queue = deque([(1, 0)])
+
+def solution(n, edge):
+    answer = 0
+    
+    graph = defaultdict(list)
+    
+    for u, v in edge:
+        graph[u].append(v)
+        graph[v].append(u)
+    
+    dists = [float('inf')] * (n + 1)
+        
+    # BFS
+    queue = deque([(1, 1)])
+    
     visited = set()
     visited.add(1)
     
-    # 노드별 거리 저장을 위한 배열
-    dists = [0] * (n + 1)
-    
     while queue:
-        curr_node, dist = queue.popleft()
+        node, cnt = queue.popleft()
         
-        for adj_node in graph[curr_node]:
+        dists[node] = min(dists[node], cnt)
+            
+        for adj_node in graph[node]:
             if adj_node not in visited:
-                queue.append((adj_node, dist + 1))
+                queue.append((adj_node, cnt + 1))
                 visited.add(adj_node)
-                dists[adj_node] = dist + 1
                 
-    # 거리가 가장 먼 값을 찾아서 그 값과 같은 수를 가지는 배열 요소 개수 리턴
-    return dists.count(max(dists))
-
-def solution(n, edge):
-    graph = defaultdict(list)
+    max_dist = max(dists[1:])
     
-    for a, b in edge:
-        graph[a].append(b)
-        graph[b].append(a)
-        
-    return bfs(n, graph)
+    answer = dists.count(max_dist)
+    
+    return answer
