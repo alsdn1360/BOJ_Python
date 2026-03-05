@@ -1,14 +1,12 @@
-WITH CS_NOT_CANCELED_APPOINTMENT AS (
+WITH NOT_CANCELED_CS_APPOINTMENT AS (
     SELECT
-        apnt_no,
-        pt_no,
-        mcdp_cd,
-        apnt_ymd,
-        mddr_id
+        *
     FROM
         appointment
     WHERE
-        (apnt_ymd BETWEEN '2022-04-13 00:00:00' AND '2022-04-13 23:59:59') AND (apnt_cncl_yn = 'N') AND (mcdp_cd = 'CS')
+        apnt_ymd BETWEEN '2022-04-13 00:00:00' AND '2022-04-13 23:59:59'
+        AND apnt_cncl_yn = 'N'
+        AND mcdp_cd = 'CS'
 )
 
 SELECT
@@ -19,7 +17,7 @@ SELECT
     d.dr_name,
     a.apnt_ymd
 FROM
-    cs_not_canceled_appointment a
+    not_canceled_cs_appointment a
 JOIN
     patient p ON a.pt_no = p.pt_no
 JOIN
