@@ -1,17 +1,17 @@
 def solution(triangle):
-    answer = 0
+    n = len(triangle)
     
-    # triangle의 각 행마다 처음과 끝에 0을 더함
-    # [i - 1][j - 1]과 [i - 1][j]의 값을 더하기 위함
-    triangle = [[0] + row + [0] for row in triangle]
+    board = [[0 for _ in range(n)] for _ in range(n)]
     
-    for i in range(1, len(triangle)):
-        # 마지막에 0을 더한 부분에서 [i - 1][j]를 하면 인덱스 에러가 발생하기 때문에 -1
-        for j in range(1, len(triangle[i]) - 1):
-            # [i - 1][j - 1]과 [i - 1][j]의 값을 더한 값 중에 더 큰 값을 넣음
-            triangle[i][j] = max(triangle[i][j] + triangle[i - 1][j - 1], triangle[i][j] + triangle[i - 1][j])
-            
-            # 현재까지 최대값과 지금의 값을 비교
-            answer = max(answer, triangle[i][j])
-            
-    return answer
+    for i in range(n):
+        for j, num in enumerate(triangle[i]):
+            board[i][j] = num
+    
+    for i in range(1, n):
+        for j in range(i + 1):
+            if j == 0:
+                board[i][j] += board[i - 1][j]
+            else:
+                board[i][j] += max(board[i - 1][j - 1], board[i - 1][j])   
+    
+    return max(board[n - 1])
