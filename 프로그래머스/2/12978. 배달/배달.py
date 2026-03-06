@@ -1,35 +1,42 @@
 import heapq
 
+
+def dijkstra(N, graph):
+    costs = {node:float('inf') for node in range(1, N + 1)}
+    costs[1] = 0
+    
+    queue = []
+    heapq.heappush(queue, (0, 1))  # cost, 출발 지점
+    
+    while queue:
+        curr_cost, curr_node = heapq.heappop(queue)
+        
+        if curr_cost < costs[curr_node]:
+            continue
+            
+        for nxt_node, nxt_cost in graph[curr_node]:
+            cost = curr_cost + nxt_cost
+            
+            if cost < costs[nxt_node]:
+                costs[nxt_node] = cost
+                heapq.heappush(queue, (cost, nxt_node))
+                
+    return costs
+
+
 def solution(N, road, K):
     answer = 0
+
+    graph = {node:[] for node in range(1, N + 1)}
     
-    graph = [[] for _ in range(N + 1)]
-    
-    # 방향이 없으므로 서로 연결
-    for a, b, cost in road:
-        graph[a].append((b, cost))
-        graph[b].append((a, cost))
-    
-    dists = [float("inf")] * (N + 1)
-    dists[1] = 0
-    
-    heap = []
-    # heap에 (코스트, 출발점) 추가
-    heapq.heappush(heap, (0, 1))
-    
-    while heap:
-        dist, curr_node = heapq.heappop(heap)
+    for a, b, c in road:
+        graph[a].append((b, c))
+        graph[b].append((a, c))
         
-        for adj_node, adj_dist in graph[curr_node]:
-            cost = dist + adj_dist
-            
-            if cost < dists[adj_node]:
-                dists[adj_node] = cost
-                heapq.heappush(heap, (cost, adj_node))
-                
-    # K 시간 이내만 골라내기
-    for i in range(N):
-        if dists[i + 1] <= K:
+    costs = dijkstra(N, graph)
+        
+    for cost in costs.values():
+        if cost <= K:
             answer += 1
-    
+            
     return answer
