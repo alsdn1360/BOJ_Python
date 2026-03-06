@@ -1,30 +1,18 @@
-def bt(n, k, dungeons, cnt, visited):
-    global answer
+def backtrack(k, dungeons, visited):
+    max_cnt = 0
     
-    answer = max(answer, cnt)
-    
-    for i, (need_fatigue, fatigue) in enumerate(dungeons):
-        if not visited[i] and k >= need_fatigue:
+    for i, (min_f, use_f) in enumerate(dungeons):
+        if not visited[i] and k >= min_f:
             visited[i] = True
-            k -= fatigue
-            cnt += 1
-        
-            bt(n, k, dungeons, cnt, visited)
-
-            cnt -= 1
-            k += fatigue
+            
+            max_cnt = max(max_cnt, backtrack(k - use_f, dungeons, visited) + 1)
+            
             visited[i] = False
-        
+            
+    return max_cnt
+
 
 def solution(k, dungeons):
-    global answer
-    answer = -1
+    visited = [False] * len(dungeons)
     
-    n = len(dungeons)
-    
-    dungeons.sort(key = lambda x : (-x[0], x[1]))
-    visited = [False] * n
-    
-    bt(n, k, dungeons, 0, visited)
-    
-    return answer
+    return backtrack(k, dungeons, visited)
